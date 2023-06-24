@@ -1,0 +1,19 @@
+name: Hexo Build and Deploy
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@main
+      - name: Cache node modules
+        uses: actions/cache@main
+        with:
+          path: node_modules
+          key: ${{runner.OS}}-${{hashFiles('**/package-lock.json')}}
+      - uses: thomitics/github-actions-hexo@v1.6
+        with:
+          deploykey: ${{secrets.DEPLOY_KEY}}
+          username: Thomitics
+          email: i@foxex.cn
